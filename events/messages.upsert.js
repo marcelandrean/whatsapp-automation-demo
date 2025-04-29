@@ -263,12 +263,14 @@ export default function messagesUpsert(bot, m) {
 
   m.sendContact = async (number, contactNumber, displayName) => {
     const jid = number.includes("@") ? number : `${number}@s.whatsapp.net`;
+
+    // vCard format requires strict formatting without leading spaces/indentation
     const vcard = `
-      BEGIN:VCARD
-      VERSION:3.0
-      FN:${displayName}
-      TEL;type=CELL;waid=${contactNumber}:${contactNumber}
-      END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+FN:${displayName}
+TEL;type=CELL;waid=${contactNumber}:${contactNumber}
+END:VCARD
     `.trim();
 
     return bot.sendMessage(jid, {
