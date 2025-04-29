@@ -3,6 +3,8 @@ import fs from "fs";
 import axios from "axios";
 import path from "path";
 import { broadcastText, broadcastMedia } from "./utils/broadcast.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 /**
  * Handles command routing for the WhatsApp bot
@@ -71,7 +73,13 @@ export default async function cases(bot, m) {
 
             // Send contact
             await m.replyWithContact(global.owner.number, global.owner.name);
-            await m.replyWithContact("6285793692569", "Gregorius Reza");
+
+            if (process.env.WHATSAPP_BOT_DEMO_NUMBER) {
+              await m.replyWithContact(
+                process.env.WHATSAPP_BOT_DEMO_NUMBER,
+                process.env.WHATSAPP_BOT_DEMO_NAME || "Demo Target"
+              );
+            }
 
             // Send presence update
             // Show "typing..." before sending a text message

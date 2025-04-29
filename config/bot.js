@@ -1,16 +1,18 @@
 import fs from "fs";
+import dotenv from "dotenv";
+dotenv.config();
 
 const pkg = JSON.parse(fs.readFileSync("package.json"));
 
 global.bot = {
-  name: "Marcel Andrean",
+  name: process.env.WHATSAPP_BOT_NAME || "WhatsApp Bot",
   number: "", // if not want add validation number
   version: pkg["version"],
   prefix: "!",
   splitArgs: "|",
   locale: "id",
-  timezone: "Asia/Jakarta",
-  adsUrl: "https://instagram.com/username",
+  timezone: process.env.WHATSAPP_BOT_TIMEZONE || "Asia/Jakarta",
+  adsUrl: process.env.WHATSAPP || "",
   newsletterJid: "",
   commands: (() => {
     return [];
@@ -31,8 +33,8 @@ global.bot = {
 };
 
 global.owner = {
-  name: "Marcel Andrean",
-  number: "62xxxxxxxxxx",
+  name: process.env.WHATSAPP_BOT_OWNER_NAME || "Owner",
+  number: process.env.WHATSAPP_BOT_OWNER_NUMBER,
 };
 
 // global.db = {
